@@ -33,6 +33,15 @@ public class Leafblower : MonoBehaviour
         Vector3 rot = transform.rotation.eulerAngles;
         rot.z -= 90.0f;
         _fog.SetVector3("BlowerRotation", rot);
+
+        // Activate blower
+        if (Input.GetMouseButton(0)){
+            _fog.SetFloat("BlowerPower", (float)0.9);
+            _fog.SetVector3("BlowerSize", new Vector3((float)1.0, (float)1.0, (float)1.0));
+        } else {
+            _fog.SetFloat("BlowerPower", (float)0);
+            _fog.SetVector3("BlowerSize", new Vector3((float)0, (float)0, (float)0));
+        }
     }
 
     private void RotateTowardsMouse()
