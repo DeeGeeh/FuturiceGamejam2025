@@ -14,7 +14,7 @@ public class Leafblower : MonoBehaviour
 
     [SerializeField] private VisualEffect _fog;
 
-    [SerializeField] private float fuel = 100;
+    [SerializeField] private FuelBar fuelBar;
     [SerializeField] private float blowDelay = 1;
     private float blowDelayPoint = 0;
 
@@ -67,6 +67,7 @@ public class Leafblower : MonoBehaviour
         //    }
         //}
 
+/*
         if (Input.GetMouseButton(0))
         {
             _fog.SetBool("BlowerOn", true);
@@ -75,6 +76,27 @@ public class Leafblower : MonoBehaviour
         {
             _fog.SetBool("BlowerOn", false);
         }
+*/
+// Activate blower
+        if (Input.GetMouseButton(0) && fuelBar.currentFuel > 0){
+            _fog.SetBool("BlowerOn", true);
+            blowDelayPoint += Time.deltaTime / blowDelay;
+            if (blowDelayPoint > 1){
+                blowDelayPoint = 1;
+            }
+            fuelBar.currentFuel -= Time.deltaTime;
+            if (fuelBar.currentFuel < 0){
+                fuelBar.currentFuel = 0;
+                _fog.SetBool("BlowerOn", false);
+            }
+        } else {
+            blowDelayPoint -= Time.deltaTime / blowDelay;
+            if (blowDelayPoint < 0){
+                blowDelayPoint = 0;
+            }
+        }
+        _fog.SetVector3("BlowerSize", new Vector3(blowDelayPoint, blowDelayPoint, blowDelayPoint));
+
 
         if (Input.GetMouseButtonDown(1))
         {
