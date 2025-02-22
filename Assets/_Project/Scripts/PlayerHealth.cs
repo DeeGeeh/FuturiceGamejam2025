@@ -7,12 +7,11 @@ public class PlayerHealth : MonoBehaviour
 {
     public Slider healthBar;  // Reference to the UI slider
     public int maxHealth = 100;
-    private int currentHealth = 100;
+    private int currentHealth;
 
     // Update is called once per frame
     void Update()
     {
-
     }
     void Start()
     {

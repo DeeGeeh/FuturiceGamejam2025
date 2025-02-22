@@ -1202,6 +1202,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1521020057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521020049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf4d45b30886494992c4c8a712f5fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+  moveSpeed: 2
 --- !u!1 &1669359845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,9 +1245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b58faae13e25149884649002bc54f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1521020049}
+  enemyPrefab: {fileID: 1757068636362168486, guid: 43212113c712b1047ac3083e0ae833a1, type: 3}
   spawnInterval: 2
-  spawnRange: {x: 0, y: 0}
+  spawnRange: {x: 8, y: 4}
 --- !u!4 &1669359847
 Transform:
   m_ObjectHideFlags: 0
@@ -1361,6 +1375,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1757068636362168486, guid: 43212113c712b1047ac3083e0ae833a1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1521020053}
+    - targetCorrespondingSourceObject: {fileID: 1757068636362168486, guid: 43212113c712b1047ac3083e0ae833a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1521020057}
   m_SourcePrefab: {fileID: 100100000, guid: 43212113c712b1047ac3083e0ae833a1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

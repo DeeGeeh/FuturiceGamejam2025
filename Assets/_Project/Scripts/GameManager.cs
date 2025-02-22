@@ -2,31 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
     public GameObject enemyPrefab; // Reference to the enemy prefab
     public float spawnInterval = 10f; // Time between spawns
     public Vector2 spawnRange; // Range for spawning enemies
 
-    private int _amountOfEnemies = 0; // Amount of enemies currently in the scene
+    private const int _maxEnemies = 3;
 
     private void Start()
     {
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval); // Start spawning enemies
+        InvokeRepeating("trySpawnEnemy", 0f, spawnInterval); // Start spawning enemies
     }
-    
-    private void Update()
+
+    // Attempt to spawn an enemy, if there are less than the maximum amount
+    void trySpawnEnemy()
     {
-        _amountOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length; // Update amount of enemies
-        if (_amountOfEnemies <= 3)
+        int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (currentEnemies < _maxEnemies)
         {
-            SpawnEnemy(); // Spawn enemy if there are less than 3 enemies
+            SpawnEnemy();
+            Debug.Log("Enemy spawned! Current enemies: " + currentEnemies);
         }
     }
 
+    // Spawn enemy at random position
     void SpawnEnemy()
     {
-        Vector2 spawnPosition = new Vector2(spawnRange.x, Random.Range(-spawnRange.y, spawnRange.y));
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity); // Spawn enemy at random position
+        float randomY = Random.Range(-spawnRange.y, spawnRange.y);
+        float randomX = Random.Range(-spawnRange.x, spawnRange.x);
+        Vector2 spawnPosition = new Vector2(randomX, randomY);
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity); 
     }
 }
