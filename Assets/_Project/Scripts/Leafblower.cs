@@ -12,6 +12,10 @@ public class Leafblower : MonoBehaviour
 
     [SerializeField] private VisualEffect _fog;
 
+    [SerializeField] private float fuel = 100;
+    [SerializeField] private float blowDelay = 1;
+    private float blowDelayPoint = 0;
+
     private Camera mainCamera;
 
     private void Start()
@@ -36,12 +40,17 @@ public class Leafblower : MonoBehaviour
 
         // Activate blower
         if (Input.GetMouseButton(0)){
-            _fog.SetFloat("BlowerPower", (float)0.9);
-            _fog.SetVector3("BlowerSize", new Vector3((float)1.0, (float)1.0, (float)1.0));
+            blowDelayPoint += Time.deltaTime / blowDelay;
+            if (blowDelayPoint > 1){
+                blowDelayPoint = 1;
+            }
         } else {
-            _fog.SetFloat("BlowerPower", (float)0);
-            _fog.SetVector3("BlowerSize", new Vector3((float)0, (float)0, (float)0));
+            blowDelayPoint -= Time.deltaTime / blowDelay;
+            if (blowDelayPoint < 0){
+                blowDelayPoint = 0;
+            }
         }
+         _fog.SetVector3("BlowerSize", new Vector3(blowDelayPoint, blowDelayPoint, blowDelayPoint));
     }
 
     private void RotateTowardsMouse()
