@@ -111,6 +111,7 @@ public class Leafblower : MonoBehaviour
         {
             _sucker.GetComponent<SpriteRenderer>().color = Color.white;
             _sucker.GetComponent<Enemy>().enabled = true;
+            _sucker.GetComponent<Enemy>().beingSucked = false;
         }
         _sucker = null;
         _playerController.canMove = true;
@@ -174,6 +175,8 @@ public class Leafblower : MonoBehaviour
                 _sucker = hit.transform.gameObject;
                 hit.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
                 _sucker.GetComponent<Enemy>().enabled = false;
+                _sucker.GetComponent<Enemy>().beingSucked = true;
+
                 _playerController.canMove = false;
                 _canMove = false;
 

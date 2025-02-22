@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     private Transform _playerTransform; // Reference to the player's transform
     private Vector2 _direction;
 
+    public bool beingSucked = false;
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -45,12 +47,20 @@ public class Enemy : MonoBehaviour
         // Check if the player collides with the enemy
         if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            if (!beingSucked)
             {
-                Debug.Log("Player hit by enemy!");
-                playerHealth.TakeDamage(damageAmount);
+                PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    Debug.Log("Player hit by enemy!");
+                    playerHealth.TakeDamage(damageAmount);
+                }
             }
+            else
+            {
+                Debug.Log("Suck it FogBog");
+            }
+            
             Destroy(gameObject); // Destroy enemy after damaging player?
         }
     }
