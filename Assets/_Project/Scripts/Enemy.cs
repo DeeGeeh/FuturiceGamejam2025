@@ -64,6 +64,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+                other.GetComponent<PlayerController>().hasPrisoner = true;
                 Debug.Log("Suck it FogBog");
             }
             

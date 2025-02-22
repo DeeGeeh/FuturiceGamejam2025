@@ -174,6 +174,9 @@ public class Leafblower : MonoBehaviour
 
     private IEnumerator HitSuction()
     {
+        if (_playerController.hasPrisoner)
+            yield break;
+
         for (int i = 0; i < 5; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, _suctionLength, _layersToCheck);

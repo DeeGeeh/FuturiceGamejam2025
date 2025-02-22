@@ -18,10 +18,19 @@ public class PlayerController : MonoBehaviour
     private float currentSpeed;
 
     public bool canMove = true;
+    public bool hasPrisoner = false;
 
+    private SpriteRenderer _rend;
+
+    private void Start()
+    {
+        _rend = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
+        UpdateVisual();
+
         if (!canMove)
             return;
 
@@ -29,6 +38,19 @@ public class PlayerController : MonoBehaviour
         Move();
 
         _fog.SetVector3("PlayerPosition", transform.position);
+    }
+
+
+    private void UpdateVisual()
+    {
+        if (hasPrisoner)
+        {
+            _rend.color = Color.blue;
+        }
+        else
+        {
+            _rend.color = Color.white;
+        }
     }
 
     private void HandleInput()
@@ -61,5 +83,11 @@ public class PlayerController : MonoBehaviour
 
         // Apply the clamped position
         transform.position = newPosition;
+    }
+
+    public void ReleasePrisoner()
+    {
+        hasPrisoner = false;
+        _rend.color = Color.white;
     }
 }
