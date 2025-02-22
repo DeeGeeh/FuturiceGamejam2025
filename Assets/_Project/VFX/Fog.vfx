@@ -20,7 +20,7 @@ MonoBehaviour:
     x: 622
     y: -190
     width: 765
-    height: 2741
+    height: 2742
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1756,7 +1756,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614621}
   - {fileID: 8926484042661614625}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661614620}
   m_MasterData:
@@ -1765,7 +1765,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.04510307312011719,"y":-0.027518510818481447,"z":0.0},"size":{"x":18.99681854248047,"y":8.539949417114258,"z":1.0}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"size":{"x":60.0,"y":30.0,"z":1.0}}'
     m_Space: 0
   m_Property:
     name: Box
