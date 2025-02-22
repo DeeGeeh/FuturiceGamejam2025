@@ -55,16 +55,25 @@ public class Leafblower : MonoBehaviour
         _fog.SetVector3("BlowerRotation", rot);
 
         // Activate blower
-        if (Input.GetMouseButton(0)){
-            blowDelayPoint += Time.deltaTime / blowDelay;
-            if (blowDelayPoint > 1){
-                blowDelayPoint = 1;
-            }
-        } else {
-            blowDelayPoint -= Time.deltaTime / blowDelay;
-            if (blowDelayPoint < 0){
-                blowDelayPoint = 0;
-            }
+        //if (Input.GetMouseButton(0)){
+        //    blowDelayPoint += Time.deltaTime / blowDelay;
+        //    if (blowDelayPoint > 1){
+        //        blowDelayPoint = 1;
+        //    }
+        //} else {
+        //    blowDelayPoint -= Time.deltaTime / blowDelay;
+        //    if (blowDelayPoint < 0){
+        //        blowDelayPoint = 0;
+        //    }
+        //}
+
+        if (Input.GetMouseButton(0))
+        {
+            _fog.SetBool("BlowerOn", true);
+        }
+        else
+        {
+            _fog.SetBool("BlowerOn", false);
         }
 
         if (Input.GetMouseButtonDown(1))
