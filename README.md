@@ -1,2 +1,1 @@
-# FuturiceGamejam
-Gamejam project
+# FuturiceGameJam
