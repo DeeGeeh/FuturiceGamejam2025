@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public bool beingSucked = false;
     public int damageAmount = 10; // Amount of damage the enemy will deal
-    public float moveSpeed = 2f; // Speed of enemy movement
+    public float baseSpeed= 2f; // Speed of enemy movement
+    public float speedIncreasePerCollection = 0.2f; 
+    public float maxSpeedMultiplier = 2f;
 
     private Transform _playerTransform; // Reference to the player's transform
     private Vector2 _direction;
     private Rigidbody2D rb;
-
-    public bool beingSucked = false;
+    private float currentSpeed = 2f;
 
 
     private void Start()
@@ -22,15 +24,18 @@ public class Enemy : MonoBehaviour
         {
             _playerTransform = player.transform;
         }
+        UpdateSpeed();
     }
 
     void FixedUpdate()
     {
         if (_playerTransform != null)
         {
+            UpdateSpeed();
+
             // Move towards player
             _direction = (_playerTransform.position - transform.position).normalized;
-            rb.velocity = _direction * moveSpeed;
+            rb.velocity = _direction * currentSpeed;
 
             // Rotate towards player
             float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
@@ -38,8 +43,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void UpdateSpeed()
     {
+        // Get the number of collected prisoners
+        int collected = CollectionPoint.getCollected();
+
+        // Calculate speed multiplier (capped at maxSpeedMultiplier)
+        float speedMultiplier = 1f + (speedIncreasePerCollection * collected);
+        speedMultiplier = Mathf.Min(speedMultiplier, maxSpeedMultiplier);
+
+        // Apply the multiplier to base speed
+        currentSpeed = baseSpeed * speedMultiplier;
+    }
+
+    private void Update()
+    { 
         // Boundary check
         if (transform.position.x < -10 || transform.position.x > 10 ||
             transform.position.y < -10 || transform.position.y > 10)
