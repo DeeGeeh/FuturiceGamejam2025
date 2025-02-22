@@ -1312,6 +1312,8 @@ MonoBehaviour:
   flipSprite: 1
   spriteRenderer: {fileID: 845814189}
   _fog: {fileID: 1414520353}
+  fuel: 100
+  blowDelay: 1
 --- !u!1001 &1333924129124994503
 PrefabInstance:
   m_ObjectHideFlags: 0
