@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CollectionPoint : MonoBehaviour
 {
-    public int collected = 0;
+    public static int collected = 0;
+
+    public static int getCollected()
+    {
+        return collected;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
