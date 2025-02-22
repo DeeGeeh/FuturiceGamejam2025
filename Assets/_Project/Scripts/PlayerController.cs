@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
     [SerializeField] private bool normalizeMovement = true;
+    [SerializeField] private Vector2 _playerBounds;
 
     [SerializeField] private VisualEffect _fog;
     [SerializeField] private VisualEffectAsset _fogAsset;
@@ -16,18 +17,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     private float currentSpeed;
 
-    private void Start()
-    {
-        List<VFXExposedProperty> temp = new List<VFXExposedProperty>();
-        _fogAsset.GetExposedProperties(temp);
-        foreach (var item in temp)
-        {
-            Debug.Log(item.name);
-        }
-    }
+    public bool canMove = true;
+
 
     void Update()
     {
+        if (!canMove)
+            return;
+
         HandleInput();
         Move();
 
@@ -55,7 +52,14 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        // Apply movement using Transform
-        transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * (currentSpeed * Time.deltaTime);
+        // Calculate new position
+        Vector3 newPosition = transform.position + new Vector3(moveDirection.x, moveDirection.y, 0) * (currentSpeed * Time.deltaTime);
+
+        // Clamp the position within the bounds
+        newPosition.x = Mathf.Clamp(newPosition.x, -_playerBounds.x, _playerBounds.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, -_playerBounds.y, _playerBounds.y);
+
+        // Apply the clamped position
+        transform.position = newPosition;
     }
 }
