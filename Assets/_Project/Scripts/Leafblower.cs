@@ -16,6 +16,7 @@ public class Leafblower : MonoBehaviour
 
     [SerializeField] private FuelBar fuelBar;
     [SerializeField] private float blowDelay = 1;
+    [SerializeField] private float fuelRegeneration = 0.2f;
     private float blowDelayPoint = 0;
 
     [Header("Suction")]
@@ -90,6 +91,9 @@ public class Leafblower : MonoBehaviour
                 _fog.SetBool("BlowerOn", false);
             }
         } else {
+            if(fuelBar.currentFuel < fuelBar.maxFuel){
+                fuelBar.currentFuel += fuelRegeneration * Time.deltaTime; // goes over max, don't care
+            }
             blowDelayPoint -= Time.deltaTime / blowDelay;
             if (blowDelayPoint < 0){
                 blowDelayPoint = 0;
