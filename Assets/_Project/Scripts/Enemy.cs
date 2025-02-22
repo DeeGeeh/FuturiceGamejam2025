@@ -9,11 +9,14 @@ public class Enemy : MonoBehaviour
 
     private Transform _playerTransform; // Reference to the player's transform
     private Vector2 _direction;
+    private Rigidbody2D rb;
 
     public bool beingSucked = false;
 
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -21,22 +24,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_playerTransform != null)
         {
-            // Calculate direction to player
-            _direction = (_playerTransform.position - transform.position).normalized;
-
             // Move towards player
-            transform.Translate(_direction * moveSpeed * Time.deltaTime);
+            _direction = (_playerTransform.position - transform.position).normalized;
+            rb.velocity = _direction * moveSpeed;
 
+            // Rotate towards player
             float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            rb.rotation = angle;
         }
+    }
 
-        // Keep the boundary check
-        if (transform.position.x < -10 || transform.position.y < -10)
+    private void Update()
+    {
+        // Boundary check
+        if (transform.position.x < -10 || transform.position.x > 10 ||
+            transform.position.y < -10 || transform.position.y > 10)
         {
             Destroy(gameObject);
         }
@@ -58,10 +64,22 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+                other.GetComponent<PlayerController>().hasPrisoner = true;
                 Debug.Log("Suck it FogBog");
             }
             
             Destroy(gameObject); // Destroy enemy after damaging player?
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Push enemies slightly apart
+            Vector2 repelDirection = (transform.position - collision.transform.position).normalized;
+            rb.AddForce(repelDirection * 0.5f, ForceMode2D.Impulse);
+        }
+    }
+
 }
