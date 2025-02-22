@@ -31,9 +31,24 @@ public class GameManager : MonoBehaviour
     // Spawn enemy at random position
     void SpawnEnemy()
     {
-        float randomY = Random.Range(-spawnRange.y, spawnRange.y);
-        float randomX = Random.Range(-spawnRange.x, spawnRange.x);
-        Vector2 spawnPosition = new Vector2(randomX, randomY);
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity); 
+        Vector2 spawnPosition;
+
+        // Randomly choose if spawning on vertical or horizontal borders
+        if (Random.value < 0.5f)
+        {
+            // Spawn on left or right border
+            float x = Random.value < 0.5f ? -spawnRange.x : spawnRange.x;
+            float y = Random.Range(-spawnRange.y, spawnRange.y);
+            spawnPosition = new Vector2(x, y);
+        }
+        else
+        {
+            // Spawn on top or bottom border
+            float x = Random.Range(-spawnRange.x, spawnRange.x);
+            float y = Random.value < 0.5f ? -spawnRange.y : spawnRange.y;
+            spawnPosition = new Vector2(x, y);
+        }
+
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
 }
