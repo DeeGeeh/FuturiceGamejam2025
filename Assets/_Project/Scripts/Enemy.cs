@@ -58,12 +58,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     { 
-        // Boundary check
-        if (transform.position.x < -10 || transform.position.x > 10 ||
-            transform.position.y < -10 || transform.position.y > 10)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
