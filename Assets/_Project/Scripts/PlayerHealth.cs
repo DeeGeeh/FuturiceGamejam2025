@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player Died!");
-        gameObject.SetActive(false);  // Disable player (or trigger respawn)
+        SceneManager.LoadScene("GameOverScene");
+        gameObject.SetActive(false);  // Disable player (or trigger respawn
     }
 }
