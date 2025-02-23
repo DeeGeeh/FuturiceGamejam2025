@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class CollectionPoint : MonoBehaviour
 {
@@ -42,7 +44,8 @@ public class CollectionPoint : MonoBehaviour
         transform.Find("CollectionMeter").localScale = new Vector3(1, 0.1f*collected, 1);
         transform.Find("CollectionMeter").position = collectionMeterOriginal + new Vector3(0, -1 + 0.05f*collected, 0);
         if (collected >= collectionGoal){
-            // victory
+            // Victory
+            SceneManager.LoadScene("WinScreen");
         }
     }
 }

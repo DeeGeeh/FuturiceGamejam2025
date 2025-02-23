@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Vector2 spawnRange; // Range for spawning enemies
 
     private int _maxEnemies = 3; // Increases based on collected enemies
+    private int _lastCollected = 0; // Last collected amount
 
     private void Start()
     {
@@ -20,18 +21,20 @@ public class GameManager : MonoBehaviour
     void trySpawnEnemy()
     {
         int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        int currentCollected = CollectionPoint.getCollected();
 
-        // Increase max possible enemies based on collected enemies
-        switch (CollectionPoint.getCollected())
+        if (currentCollected != _lastCollected)
         {
-            case 4:
+            _lastCollected = currentCollected;
+            // Increase max possible enemies based on collected enemies
+            if (currentCollected <= 4)
+            {
                 _maxEnemies++;
-                break;
-            case 7:
+            }
+            else if (currentCollected > 4 && currentCollected <= 8)
+            {
                 _maxEnemies++;
-                break;
-            default:
-                break;
+            }
         }
 
         // Spawn if there are less than the maximum amount of enemies
