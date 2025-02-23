@@ -24,6 +24,9 @@ public class Leafblower : MonoBehaviour
     [SerializeField] private LayerMask _layersToCheck;
     [SerializeField] private float _suctionSpeed = 2.0f;
     [SerializeField] private GameObject _suctionDebug;
+    [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private AudioClip _clipSuction;
+    [SerializeField] private LineRenderer _lineRenderer;
 
     [SerializeField] private PlayerController _playerController;
 
@@ -41,7 +44,7 @@ public class Leafblower : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        _suctionDebug.SetActive(false);
+        // _suctionDebug.SetActive(false);
     }
 
     private void Update()
@@ -147,12 +150,14 @@ public class Leafblower : MonoBehaviour
         _sucker = null;
         _playerController.canMove = true;
         _canMove = true;
+
+        _sfxSource.Stop();
+        _lineRenderer.enabled = false;
     }
 
     private void Suction()
     {
         Debug.DrawRay(transform.position, transform.right * _suctionLength, Color.red);
-        DebugSuctionArea();
         // _suctionDebug.SetActive(false);
 
         if (_sucker == null)
@@ -164,34 +169,9 @@ public class Leafblower : MonoBehaviour
         // pull it in 
         // and also player can't move if sucking something in
         _sucker.transform.position = Vector2.MoveTowards(_sucker.transform.position, transform.position, _suctionSpeed * Time.deltaTime);
-    }
 
-    private void DebugSuctionArea()
-    {
-        //Vector2 origin = (Vector2)transform.position;
-        //Vector2 direction = transform.right;
-        //float width = _suctionWidth; // Use your desired width for the box
-        //float height = _suctionLength; // Use your desired height for the box
-
-        //// Draw the box (4 corners)
-        //Vector2 halfExtents = new Vector2(width / 2, height / 2);
-
-        //// Calculate the four corners of the box in world space
-        //Vector2 topLeft = origin + new Vector2(-halfExtents.x, halfExtents.y);
-        //Vector2 topRight = origin + new Vector2(halfExtents.x, halfExtents.y);
-        //Vector2 bottomLeft = origin + new Vector2(-halfExtents.x, -halfExtents.y);
-        //Vector2 bottomRight = origin + new Vector2(halfExtents.x, -halfExtents.y);
-
-        //// Draw the debug lines to represent the box
-        //Debug.DrawLine(topLeft, topRight, Color.red);
-        //Debug.DrawLine(topRight, bottomRight, Color.red);
-        //Debug.DrawLine(bottomRight, bottomLeft, Color.red);
-        //Debug.DrawLine(bottomLeft, topLeft, Color.red);
-
-        //// Optionally, visualize the direction by adding an offset based on the cast distance
-        //Debug.DrawLine(topLeft + direction * _suctionLength, topRight + direction * _suctionLength, Color.red);
-        //Debug.DrawLine(bottomLeft + direction * _suctionLength, bottomRight + direction * _suctionLength, Color.red);
-
+        _lineRenderer.SetPosition(0, transform.position);
+        _lineRenderer.SetPosition(1, _sucker.transform.localPosition);
     }
 
     private IEnumerator HitSuction()
@@ -214,13 +194,18 @@ public class Leafblower : MonoBehaviour
                 _playerController.canMove = false;
                 _canMove = false;
 
+                _sfxSource.clip = _clipSuction;
+                _sfxSource.Play();
+                _sfxSource.loop = true;
                 CameraShake.Shake(0.5f, 0.5f);
+
+                _lineRenderer.enabled = true;
                 yield break;
             }
 
-            _suctionDebug.SetActive(true);
+            // _suctionDebug.SetActive(true);
             yield return null;
         }
-        _suctionDebug.SetActive(false);
+        // _suctionDebug.SetActive(false);
     }
 }
