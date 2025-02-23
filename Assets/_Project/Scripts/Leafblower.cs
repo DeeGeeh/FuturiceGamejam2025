@@ -44,6 +44,7 @@ public class Leafblower : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        _lineRenderer.enabled = false;
         // _suctionDebug.SetActive(false);
     }
 
@@ -143,7 +144,7 @@ public class Leafblower : MonoBehaviour
     {
         if (_sucker != null)
         {
-            _sucker.GetComponent<SpriteRenderer>().color = Color.white;
+            // _sucker.GetComponent<SpriteRenderer>().color = Color.white;
             _sucker.GetComponent<Enemy>().enabled = true;
             _sucker.GetComponent<Enemy>().beingSucked = false;
         }
@@ -187,7 +188,7 @@ public class Leafblower : MonoBehaviour
             {
                 Debug.Log("Hit: " + hit.collider.name);
                 _sucker = hit.transform.gameObject;
-                hit.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
+                // hit.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
                 _sucker.GetComponent<Enemy>().enabled = false;
                 _sucker.GetComponent<Enemy>().beingSucked = true;
 
