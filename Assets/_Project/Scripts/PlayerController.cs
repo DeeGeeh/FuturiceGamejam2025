@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -13,6 +12,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private VisualEffect _fog;
     [SerializeField] private VisualEffectAsset _fogAsset;
+
+    [SerializeField] private SpriteRenderer _playerSprite;
+    private Tween _wobbleTween;
+    private Vector2 _lastMoveDirection = Vector2.zero;
+    private float targetYRotation = 0.0f;
 
     private Vector2 moveDirection;
     private float currentSpeed;
@@ -68,6 +72,13 @@ public class PlayerController : MonoBehaviour
             moveDirection.Normalize();
         }
 
+        if (moveDirection.x != _lastMoveDirection.x && moveDirection.x != 0)
+        {
+            FlipSprite();
+            _lastMoveDirection = moveDirection;
+        }
+        AnimateSprite();
+
         // Handle sprint
         currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
     }
@@ -89,5 +100,37 @@ public class PlayerController : MonoBehaviour
     {
         hasPrisoner = false;
         _rend.color = Color.white;
+    }
+
+
+    private void FlipSprite()
+    {
+        if (moveDirection.x != 0)
+        {
+            targetYRotation = moveDirection.x > 0 ? 0f : 180f;
+            //_playerSprite.transform.DORotate(new Vector3(0, targetYRotation, 0), 0.2f);
+            _playerSprite.transform.rotation = Quaternion.Euler(0, targetYRotation, 0);
+        }
+    }
+
+    private void AnimateSprite()
+    {
+        if (moveDirection.sqrMagnitude > 0.01f)
+        {
+            if (_wobbleTween == null || !_wobbleTween.IsActive() || !_wobbleTween.IsPlaying())
+            {
+                Vector3 rot = _playerSprite.transform.rotation.eulerAngles;
+                rot.z = 5.0f;
+                _wobbleTween = _playerSprite.transform.DORotate(rot, 0.1f).SetLoops(-1, LoopType.Yoyo);
+            }
+        }
+        else
+        {
+            if (_wobbleTween != null && _wobbleTween.IsActive())
+            {
+                _wobbleTween.Kill();
+            }
+            _playerSprite.transform.rotation = Quaternion.Euler(0, targetYRotation, 0);
+        }
     }
 }

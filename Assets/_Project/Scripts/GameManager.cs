@@ -8,20 +8,8 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab; // Reference to the enemy prefab
     public float spawnInterval = 10f; // Time between spawns
     public Vector2 spawnRange; // Range for spawning enemies
-    public int killCounter = 0; // Number of enemies killed
 
-    private const int _maxEnemies = 3;
-
-    public void IncreaseKillCounter()
-    {
-        killCounter++;
-        Debug.Log("Kill count: " + killCounter);
-    }
-
-    public int GetKillCount()
-    {
-        return killCounter;
-    }
+    private int _maxEnemies = 3;
 
     private void Start()
     {

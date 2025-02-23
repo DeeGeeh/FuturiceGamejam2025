@@ -8,12 +8,23 @@ public class MenuManager : MonoBehaviour
     public void PlayGame()
     {
         // Loads the next scene in the build index
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Debug.Log("Play");
+        SceneManager.LoadScene("GameplayScene");
     }
 
     public void QuitGame()
     {
         Debug.Log("Quit");
         Application.Quit();
+    }
+    
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("CreditsScene");
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOverScene");
     }
 }
