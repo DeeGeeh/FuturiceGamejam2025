@@ -84,7 +84,7 @@ public class Leafblower : MonoBehaviour
             if (blowDelayPoint > 1){
                 blowDelayPoint = 1;
             }
-            fuelBar.currentFuel -= Time.deltaTime;
+            fuelBar.currentFuel -= Time.deltaTime * 2;
             if (fuelBar.currentFuel < 0){
                 fuelBar.currentFuel = 0;
                 _fog.SetBool("BlowerOn", false);
