@@ -24,12 +24,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     public bool hasPrisoner = false;
 
-    private SpriteRenderer _rend;
-
-    private void Start()
-    {
-        _rend = GetComponent<SpriteRenderer>();
-    }
+    [SerializeField] private SpriteRenderer _gunRenderer;
 
     void Update()
     {
@@ -49,11 +44,11 @@ public class PlayerController : MonoBehaviour
     {
         if (hasPrisoner)
         {
-            _rend.color = Color.blue;
+            _gunRenderer.color = Color.blue;
         }
         else
         {
-            _rend.color = Color.white;
+            _gunRenderer.color = Color.white;
         }
     }
 
@@ -99,7 +94,7 @@ public class PlayerController : MonoBehaviour
     public void ReleasePrisoner()
     {
         hasPrisoner = false;
-        _rend.color = Color.white;
+        _gunRenderer.color = Color.white;
     }
 
 
